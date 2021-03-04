@@ -39,9 +39,11 @@ nov_match = 0
 dec_match = 0
 error_4xx = 0
 error_3xx = 0
+total_count = 0
 
 f = open(LOCAL_FILE)
 for line in f:
+    #total_count +=1
     if 'Oct/1994' in line:
         oct94_count += 1
     elif 'Nov/1994' in line:
@@ -66,12 +68,20 @@ for line in f:
         aug94_count += 1
     elif 'Sep/1995' in line:
         sep94_count += 1
-    elif r"4\d\d" in line:
-        error_4xx += 1
-    elif r"3\d\d" in line:
-        error_3xx += 1
     else:
         oct95_count += 1
+
+
+    nothing = 0
+    if r"400" in line:
+        error_4xx += 1
+    elif r"300" in line:
+        error_3xx += 1 
+    else:
+        nothing += 1
+
+total_count = + oct94_count + nov94_count + dec94_count + jan94_count + feb94_count + mar94_count + apr94_count + may94_count + jun94_count + jul94_count + aug94_count + sep94_count
+print(nothing)
 
 print(f'Oct/1994 requests:', oct94_count)
 print(f'Nov/1994 requests:', nov94_count)
@@ -86,9 +96,8 @@ print(f'Jul/1995 requests:', jul94_count)
 print(f'Aug/1995 requests:', aug94_count)
 print(f'Sep/1995 requests:', sep94_count)
 print(f'Oct/1995 requests:', oct95_count)
-print(f'error 4xx:', error_4xx)
-print(f'error 3xx:', error_3xx)
-print()
+print(f'Percent of error 4xx:', (error_4xx/total_count)*10, '%')
+print(f'Percent of error 3xx:', (error_3xx/total_count)*10, '%')
 print()
 
 pages = {}
@@ -186,4 +195,7 @@ print(f'The number of requests on Thursday averaged {formatted_thur}')
 print(f'The number of requests on Friday averaged {formatted_fri}')
 print(f'The number of requests on Saturday averaged {formatted_sat}')
 print(f'The number of requests on Sunday averaged {formatted_sun}')
+print()
+print()
+
 

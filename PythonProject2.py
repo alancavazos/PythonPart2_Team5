@@ -1,3 +1,4 @@
+#Imports
 from urllib.request import urlretrieve
 import re
 import datetime
@@ -11,6 +12,7 @@ local_file, headers = urlretrieve(URL_PATH, LOCAL_FILE);
 
 FILE_NAME = 'path/to/file'
 
+#counts and matches for dates
 oct94_count = 0
 nov94_count = 0
 dec94_count = 0
@@ -38,8 +40,8 @@ oct95_match = 0
 nov_match = 0
 dec_match = 0
 
-f = open(LOCAL_FILE)
-for line in f:
+f = open(LOCAL_FILE)    #opens local file
+for line in f:          #goes through line by line to check for requests per date
     if 'Oct/1994' in line:
         oct94_count += 1
     elif 'Nov/1994' in line:
@@ -66,7 +68,7 @@ for line in f:
         sep94_count += 1
     else:
         oct95_count += 1
-
+#Prints request number per month/year
 print(f'Oct/1994 requests:', oct94_count)
 print(f'Nov/1994 requests:', nov94_count)
 print(f'Dec/1994 requests:', dec94_count)
@@ -94,9 +96,9 @@ fri = 0
 sat = 0
 sun = 0
 
-f = open(LOCAL_FILE)
+f = open(LOCAL_FILE)    #opens file
 for line in f:
-  pieces = re.split('.+ \[(.+) .+\] "[A-Z]{3,4} (.+) HTTP/1.0" ([0-9]{3})', line)
+  pieces = re.split('.+ \[(.+) .+\] "[A-Z]{3,4} (.+) HTTP/1.0" ([0-9]{3})', line)   #splits line
   if len(pieces) < 4:
     continue
   date = pieces[1].split(':')
@@ -105,7 +107,7 @@ for line in f:
 
   weekday = datetime.datetime.weekday(days)
 
-
+        #counts day of week
   if weekday == 0:
     mon += 1  
   elif weekday == 1:
@@ -120,7 +122,7 @@ for line in f:
     sat += 1
   elif weekday == 6:
     sun += 1
-  
+        #counts months
   if 'Jan' in line:
       jan_match += 1
   if 'Feb' in line:
@@ -154,7 +156,8 @@ for line in f:
     pages[filename] += 1
   else:
     pages[filename] = 1
-
+    
+#finds average number of requests per day
 ave_mon = mon / 52
 ave_tue = tue / 52
 ave_wed = wed / 52
@@ -163,6 +166,7 @@ ave_fri = fri / 52
 ave_sat = sat / 52
 ave_sun = sun / 52
 
+#formats output for printing
 formatted_mon = "{:.2f}".format(ave_mon)
 formatted_tue = "{:.2f}".format(ave_tue)
 formatted_wed= "{:.2f}".format(ave_wed)
@@ -171,6 +175,7 @@ formatted_fri = "{:.2f}".format(ave_fri)
 formatted_sat = "{:.2f}".format(ave_sat)
 formatted_sun = "{:.2f}".format(ave_sun)
 
+#prints avg number of requests per day
 print(f'The number of requests on Monday averaged {formatted_mon}')
 print(f'The number of requests on Tuesday averaged {formatted_tue}')
 print(f'The number of requests on Wednesday averaged {formatted_wed}')

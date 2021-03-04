@@ -7,7 +7,7 @@ LOCAL_FILE = 'local_copy.log'
 total_requests = 0
 year_count = 0
 
-local_file, headers = urlretrieve(URL_PATH, LOCAL_FILE);
+local_file, headers = urlretrieve(URL_PATH, LOCAL_FILE)
 
 FILE_NAME = 'path/to/file'
 
@@ -37,6 +37,8 @@ oct_match = 0
 oct95_match = 0
 nov_match = 0
 dec_match = 0
+error_4xx = 0
+error_3xx = 0
 
 f = open(LOCAL_FILE)
 for line in f:
@@ -64,6 +66,10 @@ for line in f:
         aug94_count += 1
     elif 'Sep/1995' in line:
         sep94_count += 1
+    elif r"4\d\d" in line:
+        error_4xx += 1
+    elif r"3\d\d" in line:
+        error_3xx += 1
     else:
         oct95_count += 1
 
@@ -80,6 +86,8 @@ print(f'Jul/1995 requests:', jul94_count)
 print(f'Aug/1995 requests:', aug94_count)
 print(f'Sep/1995 requests:', sep94_count)
 print(f'Oct/1995 requests:', oct95_count)
+print(f'error 4xx:', error_4xx)
+print(f'error 3xx:', error_3xx)
 print()
 print()
 
@@ -96,7 +104,7 @@ sun = 0
 
 f = open(LOCAL_FILE)
 for line in f:
-  pieces = re.split('.+ \[(.+) .+\] "[A-Z]{3,4} (.+) HTTP/1.0" ([0-9]{3})', line)
+  pieces = re.split(r'.+ \[(.+) .+\] "[A-Z]{3,4} (.+) HTTP/1.0" ([0-9]{3})', line)
   if len(pieces) < 4:
     continue
   date = pieces[1].split(':')

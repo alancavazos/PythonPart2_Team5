@@ -71,7 +71,6 @@ for line in f:
     else:
         oct95_count += 1
 
-
     nothing = 0
     if r"400" in line:
         error_4xx += 1
@@ -81,7 +80,7 @@ for line in f:
         nothing += 1
 
 total_count = + oct94_count + nov94_count + dec94_count + jan94_count + feb94_count + mar94_count + apr94_count + may94_count + jun94_count + jul94_count + aug94_count + sep94_count
-print(nothing)
+#print(nothing)
 
 print(f'Oct/1994 requests:', oct94_count)
 print(f'Nov/1994 requests:', nov94_count)
